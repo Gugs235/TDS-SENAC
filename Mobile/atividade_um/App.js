@@ -8,6 +8,7 @@ import {
 	Modal,
 	KeyboardAvoidingView,
 	Platform,
+	TouchableOpacity,
 } from "react-native";
 import AntDesign from "@expo/vector-icons/AntDesign";
 import { NavigationContainer } from "@react-navigation/native";
@@ -40,65 +41,98 @@ function MainScreen({ navigation }) {
 		}
 	};
 
-  return (
-    <KeyboardAvoidingView
-      style={styles.container}
-      behavior={Platform.OS === "ios" ? "padding" : "height"}
-      keyboardVerticalOffset={Platform.OS === 'ios' ? 40 : 0}
-      >
-      <View style={styles.innerContainer}>
-        <Text style={styles.text}>Aplicativo Maneiro</Text>
-        <Image
-          source={{ uri: 'github.com/mauriiicio.png'}}
-          style={styles.image}
-        />
-        <TouchableOpacity onPress={toggleHeartColor} style={styles.heartButton}>
-          <AntDesign name="heart" size={24} color={heartColor} />
-        </TouchableOpacity>
-        <TextInput
-          style={styles.input}
-          placeholder="Login"
-          autoCapitalize="none"
-          value={login}
-          onChangeText={setLogin}
-        />
-      </View>
-      </KeyboardAvoidingView>
-  )
+	return (
+		<KeyboardAvoidingView
+			style={styles.container}
+			behavior={Platform.OS === "ios" ? "padding" : "height"}
+			keyboardVerticalOffset={Platform.OS === "ios" ? 40 : 0}
+		>
+			<View style={styles.innerContainer}>
+				<Text style={styles.text}>Aplicativo Maneiro</Text>
+				<Image source={{ uri: "github.com/Mauriiicio.png" }} style={styles.image} />
+				<TouchableOpacity onPress={toggleHeartColor} style={styles.heartButton}>
+					<AntDesign name="heart" size={24} color={heartColor} />
+				</TouchableOpacity>
+				<TextInput
+					style={styles.input}
+					placeholder="Login"
+					autoCapitalize="none"
+					value={login}
+					onChangeText={setLogin}
+				/>
+				<TextInput
+					style={styles.input}
+					placeholder="Senha"
+					secureTextEntry
+					autoCapitalize="none"
+					value={password}
+					onChangeText={setPassword}
+				/>
+				<TouchableOpacity onPress={showAlert} style={styles.customButton}>
+					<Text style={styles.buttonText}>Entrar</Text>
+				</TouchableOpacity>
+				<Modal
+					animationType="fade"
+					transparent={true}
+					visible={modalVisible}
+					onRequestClose={() => setModalVisible(false)}
+				>
+					<View style={styles.modalOverlay}>
+						<View style={styles.modalContent}>
+							<Text style={styles.modalText}>{modalMessage}</Text>
+							<TouchableOpacity
+								style={styles.modalButton}
+								onPress={() => {
+									setModalVisible(false);
+									if (login === "admin" && password === "admin") {
+										navigation.navigate("NewWindow");
+									}
+								}}
+							>
+								<Text style={styles.modalButtonText}>
+									{login === "admin" && password === "admin"
+										? "Bem vindos"
+										: "Acesso Negado"}
+								</Text>
+							</TouchableOpacity>
+						</View>
+					</View>
+				</Modal>
+			</View>
+		</KeyboardAvoidingView>
+	);
 }
-
 
 export default function App() {
-  return (
-    <NavigationContainer>
-      <Stack.Navigator initialRouteName="Main">
-        <Stack.Screen
-          name="Main"
-          component={MainScreen}
-          options={{ title: "Tela Principal" }}
-        />
-        <Stack.Screen
-          name="NewWindow"
-          component={NewWindow}
-          options={{ title: "Nova Janela" }}
-        />
-      </Stack.Navigator>
-    </NavigationContainer>
-  );
+	return (
+		<NavigationContainer>
+			<Stack.Navigator initialRouteName="Main">
+				<Stack.Screen
+					name="Main"
+					component={MainScreen}
+					options={{ title: "Tela Principal" }}
+				/>
+				<Stack.Screen
+					name="NewWindow"
+					component={NewWindow}
+					options={{ title: "Tic Tac Toe" }}
+				/>
+			</Stack.Navigator>
+		</NavigationContainer>
+	);
 }
-
 
 const styles = StyleSheet.create({
 	container: {
 		flex: 1,
 		backgroundColor: "#fff", // cor de fundo branca
 	},
-  innerContainer: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    padding: 20,
-  },
+	innerContainer: {
+		flex: 1,
+		justifyContent: "center",
+		alignItems: "center",
+		padding: 20,
+	},
 
 	text: {
 		fontSize: 18,
