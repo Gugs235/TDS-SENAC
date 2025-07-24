@@ -1,0 +1,18 @@
+/* Criando o arquivo css */
+
+.span-required {
+	display: none;
+	color: red;
+}
+
+.span-required-correct {
+	display: none;
+	color: green;
+}
+
+.input {
+	background-color: none;
+    color: white;
+}
+
+/* Iniciando escondido */
