@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>ATV - 001</title>
+		<link rel="stylesheet" href="style001.css" />
+	</head>
+	<body>
+		<form action="action001.php" method="post">
+			<fieldset>
+				<legend>Dados Pessoais</legend>
+
+				<label for="nome">Nome:</label>
+				<input
+					type="text"
+					name="nome"
+					id="nome"
+					placeholder="Digite seu nome"
+					required
+				/>
+
+				<label for="rg">RG:</label>
+				<input type="text" name="rg" id="rg" placeholder="Digite seu RG" required />
+
+				<label for="cpf">CPF:</label>
+				<input
+					type="text"
+					name="cpf"
+					id="cpf"
+					placeholder="Digite seu CPF"
+					required
+				/>
+
+				<label for="endereco">Endereço:</label>
+				<input
+					type="text"
+					name="endereco"
+					id="endereco"
+					placeholder="Digite seu endereço"
+					required
+				/>
+			</fieldset>
+
+			<fieldset>
+				<legend>Informações Adicionais</legend>
+
+				<label for="idade">Idade:</label>
+				<input
+					type="number"
+					name="idade"
+					id="idade"
+					placeholder="Digite sua idade"
+					required
+				/>
+
+				<label for="data_nascimento">Data de nascimento:</label>
+				<input type="date" name="data_nascimento" id="data_nascimento" required />
+			</fieldset>
+
+			<fieldset>
+				<legend>Preferências</legend>
+
+				<p>Estação do ano favorita:</p>
+				<label
+					><input type="checkbox" name="epoca_ano[]" value="primavera" />
+					Primavera</label
+				>
+				<label
+					><input type="checkbox" name="epoca_ano[]" value="verao" /> Verão</label
+				>
+				<label
+					><input type="checkbox" name="epoca_ano[]" value="outono" /> Outono</label
+				>
+				<label
+					><input type="checkbox" name="epoca_ano[]" value="inverno" />
+					Inverno</label
+				>
+
+				<p>Gênero:</p>
+				<label
+					><input type="radio" name="genero" value="masculino" /> Masculino</label
+				>
+				<label
+					><input type="radio" name="genero" value="feminino" /> Feminino</label
+				>
+				<label><input type="radio" name="genero" value="outro" /> Outro</label>
+
+				<label for="cor_favorita">Cor favorita:</label>
+				<input type="color" name="cor_favorita" id="cor_favorita" required />
+			</fieldset>
+
+			<fieldset>
+				<legend>Mais sobre você</legend>
+
+				<label for="escolaridade">Escolaridade:</label>
+				<select name="escolaridade" id="escolaridade" required>
+					<option value="">Selecione</option>
+					<option value="fundamental">Ensino Fundamental</option>
+					<option value="medio">Ensino Médio</option>
+					<option value="superior">Ensino Superior</option>
+					<option value="pos">Pós-graduação</option>
+				</select>
+
+				<label for="profissao">Profissão:</label>
+				<input
+					type="text"
+					name="profissao"
+					id="profissao"
+					placeholder="Sua profissão atual"
+					required
+				/>
+
+				<label for="estado_civil">Estado Civil:</label>
+				<select name="estado_civil" id="estado_civil" required>
+					<option value="">Selecione</option>
+					<option value="solteiro">Solteiro(a)</option>
+					<option value="casado">Casado(a)</option>
+					<option value="divorciado">Divorciado(a)</option>
+					<option value="viuvo">Viúvo(a)</option>
+				</select>
+
+				<label for="hobbies">Hobbies:</label>
+				<textarea
+					name="hobbies"
+					id="hobbies"
+					rows="3"
+					placeholder="Ex: ler, tocar violão, caminhar..."
+				></textarea>
+
+				<label for="usa_redes">Você usa redes sociais com frequência?</label>
+				<select name="usa_redes" id="usa_redes" required>
+					<option value="">Selecione</option>
+					<option value="sim">Sim</option>
+					<option value="nao">Não</option>
+					<option value="as_vezes">Às vezes</option>
+				</select>
+			</fieldset>
+
+			<fieldset>
+				<input type="submit" value="Enviar" />
+			</fieldset>
+		</form>
+	</body>
+</html>
