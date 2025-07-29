@@ -39,8 +39,11 @@ o método GET é usado para enviar dados através da URL, enquanto o método POS
             <input type="radio" name="sistema" value="MacOS" id="macos"> MacOS
             <!-- <label for="macos">MacOS</label> -->
 
-
-
+            <!-- checkbox -->
+            <p>Quais sistemas operacionais você já usou?</p>
+            <input type="checkbox" name="sistemas[]" value="Windows98" id="windows"> Windows
+            <input type="checkbox" name="sistemas[]" value="Linux" id="linux"> Linux
+            <input type="checkbox" name="sistemas[]" value="MacOS" id="macos"> MacOS
 
             <!-- <input type="email" placeholder="Digite seu email" name="email" required>
         <input type="cpf" placeholder="Digite seu CPF" name="cpf" required>  -->
