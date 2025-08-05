@@ -1,9 +1,7 @@
 <?php
-
 require 'Usuario.php';
 
 $objUsuario = new Usuario();
-
 
 if (isset($_POST['cadastrar'])) {
     $nome = $_POST['nome'];
@@ -14,63 +12,187 @@ if (isset($_POST['cadastrar'])) {
 
     $res = $objUsuario->cadastrar();
 
-    if ($res) {
-        echo '<script> alert("Cadastrado com sucesso")</script>';
-    } else {
-        echo '<script> alert("Falha no cadastro")</script>';
-    }
+    echo '<script>alert("' . ($res ? 'Cadastro com sucesso' : 'Falha no Cadastro') . '")</script>';
 }
 
-// Carrega todos os usuários sempre
-$usuarios = $objUsuario->listar_todos();
-?>
+$usuarios = [];
 
+if (isset($_POST['listar'])) {
+    $usuarios = $objUsuario->listar_todos();
+}
+
+if (isset($_GET['delete_id'])) {
+    $id_user = $_GET['delete_id'];
+    $objUsuario->deletar($id_user);
+    $usuarios = $objUsuario->listar_todos();
+}
+
+if (isset($_POST['editar'])) {
+    $id = $_POST['id'];
+    $nome = $_POST['nome'];
+    $senha = $_POST['senha'];
+
+    $objUsuario->id = $id;
+    $objUsuario->nome = $nome;
+    $objUsuario->senha = $senha;
+
+    $res = $objUsuario->atualizar();
+    echo '<script> alert("' . ($res ? 'Editado com sucesso' : 'Falha na Edição') . '") </script>';
+
+    $usuarios = $objUsuario->listar_todos();
+}
+
+
+
+?>
 <!DOCTYPE html>
 <html lang="pt-BR">
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Gerenciamento de Usuários</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(to right, #0f2027, #203a43, #2c5364);
+            color: white;
+            text-align: center;
+            margin: 0;
+            padding: 40px;
+        }
+
+        h2 {
+            margin-bottom: 20px;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: auto;
+            background: rgba(255, 255, 255, 0.05);
+            padding: 30px;
+            border-radius: 10px;
+        }
+
+        input[type="text"],
+        input[type="password"] {
+            width: 90%;
+            padding: 10px;
+            margin: 10px auto;
+            display: block;
+            border-radius: 5px;
+            border: none;
+        }
+
+        button {
+            padding: 10px 20px;
+            margin-top: 10px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        table {
+            width: 100%;
+            margin-top: 20px;
+            border-collapse: collapse;
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        th,
+        td {
+            padding: 10px;
+            border: 1px solid #ddd;
+            color: white;
+        }
+
+        a img {
+            cursor: pointer;
+        }
+
+        a:hover img {
+            filter: brightness(0.7);
+        }
+
+        p {
+            margin-top: 20px;
+            color: #ccc;
+        }
+    </style>
+
+
+    <script>
+        function carregaDados(id, nome, senha) {
+            console.log(id, nome, senha);
+            document.getElementById("id").value = id;
+
+            document.getElementById("nome").value = nome;
+            document.getElementById("senha").value = senha;
+
+            document.getElementById("submitButton").name = 'editar';
+            document.getElementById("submitButton").innerText = 'editar';
+        }
+    </script>
+
+
 </head>
 
 <body>
-    <div>
-        <form action="" method="post">
-            <input type="hidden" name="id" id="id">
-            <input type="text" name="nome" id="nome">
-            <input type="text" name="senha" id="senha">
+
+    <div class="container">
+        <h2>Cadastrar Novo Usuário</h2>
+        <form method="POST">
+            <input type="hidden" id="id" name="id" value="">
+            <input type="text" id="nome" name="nome" placeholder="Nome" required>
+            <input type="text" id="senha" name="senha" placeholder="Senha" required>
             <button type="submit" name="cadastrar" id="submitButton">Cadastrar</button>
         </form>
-    </div>
 
-    <div>
-        <!-- Botão para listar usuários (toggle) -->
-        <button type="button" id="toggleLista" style="margin-top:10px;">Listar Usuários</button>
+        <!-- botão para listar usuarios -->
+        <form method="POST" style="margin-top: 20px;">
+            <button type="submit" name="listar">Listar Usuários</button>
+        </form>
 
-        <div id="listaUsuarios" style="display:none;">
-            <h3>Lista de Usuários</h3>
-            <ul>
+        <?php if (!empty($usuarios)): ?>
+            <h2>Usuários Cadastrados</h2>
+            <table>
+                <tr>
+                    <th>ID</th>
+                    <th>Nome</th>
+                    <th>Senha</th>
+                    <th>Ações</th>
+                </tr>
                 <?php foreach ($usuarios as $usuario): ?>
-                    <li><?php echo htmlspecialchars($usuario['nome']); ?></li>
+                    <tr>
+                        <td><?= htmlspecialchars($usuario['id']) ?></td>
+                        <td><?= htmlspecialchars($usuario['nome']) ?></td>
+                        <td><?= htmlspecialchars($usuario['senha']) ?></td>
+                        <!-- botão apagar -->
+                        <td>
+                            <a href="?delete_id=<?= $usuario['id'] ?>" onclick="return confirm('Tem certeza que deseja remover este usuário?')">
+                                <img width="20" src="https://img.icons8.com/ios-glyphs/30/filled-trash.png" alt="Excluir" />
+                            </a>
+                        </td>
+
+                        <td>
+                            <!-- botão editar -->
+                            <button type="button" onclick="carregaDados(
+                                '<?= htmlspecialchars($usuario['id']) ?>',
+                                '<?= htmlspecialchars($usuario['nome']) ?>',
+                                '<?= htmlspecialchars($usuario['senha']) ?>')">
+                                <img width="20" src="https://img.icons8.com/ios-glyphs/30/edit--v1.png" alt="edit--v1">
+                            </button>
+                        </td>
+
+                    </tr>
                 <?php endforeach; ?>
-            </ul>
-        </div>
+            </table>
+        <?php else: ?>
+            <p>Nenhum usuário cadastrado.</p>
+        <?php endif; ?>
     </div>
 
-    <script>
-        const btn = document.getElementById('toggleLista');
-        const lista = document.getElementById('listaUsuarios');
-        btn.addEventListener('click', function() {
-            if (lista.style.display === 'none') {
-                lista.style.display = 'block';
-                btn.textContent = 'Ocultar Usuários';
-            } else {
-                lista.style.display = 'none';
-                btn.textContent = 'Listar Usuários';
-            }
-        });
-    </script>
 </body>
 
 </html>

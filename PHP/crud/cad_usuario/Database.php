@@ -71,4 +71,34 @@ class Database
             echo "</pre";
         }
     }
+
+    public function delete($where)
+    {
+        try {
+            $query = "DELETE FROM " . $this->tabela . " WHERE " . $where;
+            $del = $this->execute($query);
+            $del = $del->rowCount();
+
+            if ($del == 1) {
+                return true;
+            } else {
+                return false;
+            }
+        } catch (\Throwable $th) {
+        }
+    }
+
+    public function update($where, $array)
+    {
+        try {
+            $fields = array_keys($array);
+            $values = array_values($array);
+
+
+            $query = "UPDATE " . $this->tabela . " SET " . implode("=?,", $fields) . " =? WHERE " . $where;
+            $res = $this->execute($query, $values);
+            return $res->rowCount();
+        } catch (\Throwable $th) {
+        }
+    }
 }
