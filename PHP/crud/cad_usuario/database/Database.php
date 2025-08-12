@@ -18,6 +18,12 @@ class Database
         $this->tabela = $tabela;
         $this->conectar();
     }
+
+    public function connect()
+    {
+        return $this->conn;
+    }
+
     public function conectar()
     {
         try {
@@ -32,6 +38,7 @@ class Database
     }
     public function execute($query, $binds = [])
     {
+        $stmt = null;
         try {
             $stmt =  $this->conn->prepare($query);
             $stmt->execute($binds);
