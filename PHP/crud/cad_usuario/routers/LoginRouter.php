@@ -10,7 +10,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         case 'validarLogin':
             $output = $loginController->validarSenha($_POST['nome'], $_POST['senha']);
             $output ?
-                header('Location: ../pages/CadUsuario.php') : //Login Correto:
+                header('Location: ../pages/usuario/home.php') : //Login Correto:
                 header('Location: ../index.php'); //Login Incorreto
 
             break;

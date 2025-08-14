@@ -1,5 +1,13 @@
 <?php
-require_once __DIR__ . '/../controller/UsuarioController.php';
+session_start();
+
+if (!isset($_SESSION["id_usuario"])) {
+    header('Location: ../../index.php');
+}
+
+
+
+require_once __DIR__ . '/../../controller/UsuarioController.php';
 
 $objUsuario = new Usuario();
 
@@ -154,6 +162,7 @@ if (isset($_POST['editar'])) {
             <button type="submit" name="listar">Listar Usuários</button>
         </form>
 
+
         <?php if (!empty($usuarios)): ?>
             <h2>Usuários Cadastrados</h2>
             <table>
@@ -161,7 +170,8 @@ if (isset($_POST['editar'])) {
                     <th>ID</th>
                     <th>Nome</th>
                     <th>Senha</th>
-                    <th>Ações</th>
+                    <th>Apagar</th>
+                    <th>Editar</th>
                 </tr>
                 <?php foreach ($usuarios as $usuario): ?>
                     <tr>

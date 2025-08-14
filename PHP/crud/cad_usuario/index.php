@@ -72,7 +72,7 @@
                 <button type="submit"> Logar</button>
             </div>
         </form>
-        <p>Não tem conta? <a href="CadUsuario.php" style="color:#4CAF50;">Cadastre-se</a></p>
+        <p>Não tem conta? <a href="pages/usuario/CadUsuario.php" style="color:#4CAF50;">Cadastre-se</a></p>
     </div>
 
 </body>
